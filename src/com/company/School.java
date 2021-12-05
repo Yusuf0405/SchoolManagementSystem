@@ -1,11 +1,13 @@
 package com.company;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class School {
 
 
-    void welcome(List<Student> students, List<Human> sotrudniki) {
+    void welcome() {
         Scanner scanner = new Scanner(System.in);
         int count = 0;
         while (true) {
@@ -14,7 +16,7 @@ public class School {
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите свой пароль:-*-*-*-*-*-*-*-*-*-*-*");
             String x = scanner.nextLine();
             if (y.equals(Main.accountant.getLogin()) && x.equals(Main.accountant.getPassword())) {
-                MainMenuBugalter(students, sotrudniki);
+                MainMenuAccountant();
                 break;
 
 
@@ -32,8 +34,7 @@ public class School {
     }
 
 
-    static void MainMenuBugalter(List<Student> students, List<Human> employees) {
-
+    private static void MainMenuAccountant() {
         boolean temp = false;
         while (true) {
             try {
@@ -41,47 +42,41 @@ public class School {
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите 1 чтобы найти студентов или сотрудников.-*-*-*-*-*-*-*-*-*-*-*-" +
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите 2 чтобы узнать информацию о школе и о всех студентов и сотрудников.-*-*-*-*-*-*-*-*-*-*-*-" +
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите 3 чтобы добавить студентов или сотрудников.-*-*-*-*-*-*-*-*-*-*-*-" +
-                        "\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите 4 чтобы оплатить контракт студента или заработную плату сотрудника.-*-*-*-*-*-*-*-*-*-*-*-");
+                        "\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите 4 чтобы оплатить контракт студента или заработную плату сотрудника.-*-*-*-*-*-*-*-*-*-*-*-" +
+                        "\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите 5 чтобы сохранить изминения и выйти из системы.-*-*-*-*-*-*-*-*-*-*-*-");
                 Scanner scanner = new Scanner(System.in);
                 boolean temp2 = false;
                 while (true) {
                     int n = scanner.nextInt();
                     switch (n) {
-                        case 1: {
-                            Main1(students, employees);
-                            temp = true;
-                            temp2 = true;
-                            restart(students, employees);
+                        case 1:
+                            Main1();
+                            restart();
+                        case 2:
+                            Main2();
+                            restart();
 
-                        }
-                        case 2: {
-                            Main2(students, employees);
-                            temp = true;
-                            temp2 = true;
-                            restart(students, employees);
-                        }
-                        case 3: {
-                            Main3(students,employees);
-                            temp = true;
-                            temp2 = true;
-                            restart(students, employees);
-                        }
-                        case 4: {
-                            Main4(students, employees);
-                            restart(students, employees);
+                        case 3:
+                            Main3();
+                            restart();
 
-                        }
+                        case 4:
+                            Main4();
+                            restart();
+
+                        case 5:
+                            savingData();
                     }
 
 
-                    if (temp2) {
-                        break;
-                    }
-                    if (temp2 == false) {
+                    if (!temp2) {
                         System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Ошибка!!!-*-*-*-*-*-*-*-*-*-*-*-" + "\n-*-*-*-*-*-*-*-*-*-*-*-Следуйте выше заданным инструкциям!!-*-*-*-*-*-*-*-*-*-*-*-");
                         break;
 
                     }
+
+                    if (temp2)
+                        break;
                 }
 
 
@@ -97,7 +92,7 @@ public class School {
     }
 
 
-    static void Main1(List<Student> students, List<Human> employees) {
+    private static void Main1() {
         boolean temp = false;
         while (true) {
             try {
@@ -112,11 +107,11 @@ public class School {
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 2 чтобы искать всех студентов по имени:-*-*-*-*-*-*-*-*-*-*-*-");
                         int c = scanner.nextInt();
                         if (c == 1) {
-                            Student.searchStudentId(scanner, students);
+                            Student.searchStudentId();
                             temp2 = true;
                             temp = true;
                         } else if (c == 2) {
-                            Student.searchStudentName(students);
+                            Student.searchStudentName();
                             temp2 = true;
                             temp = true;
                         }
@@ -128,18 +123,18 @@ public class School {
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 2 чтобы искать всех сотрудников по имени:-*-*-*-*-*-*-*-*-*-*-*-");
                         int b = scanner.nextInt();
                         if (b == 1) {
-                            Human.searchEmployeeId(scanner, employees);
+                            Human.searchEmployeeId();
                             temp2 = true;
                             temp = true;
                         } else if (b == 2) {
-                            Human.searchEmployeesName(employees);
+                            Human.searchEmployeesName();
                             temp2 = true;
                             temp = true;
                         }
 
 
                     }
-                    if (temp2 == false) {
+                    if (!temp2) {
                         System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Ошибка!!!-*-*-*-*-*-*-*-*-*-*-*-" + "\n-*-*-*-*-*-*-*-*-*-*-*-Следуйте выше заданным инструкциям!!-*-*-*-*-*-*-*-*-*-*-*-");
                         break;
 
@@ -160,7 +155,7 @@ public class School {
         }
     }
 
-    static void Main2(List<Student> students, List<Human> employees) {
+    private static void Main2() {
         boolean temp = false;
         while (true) {
             try {
@@ -172,32 +167,27 @@ public class School {
                 while (true) {
                     int y = scanner.nextInt();
                     switch (y) {
-                        case 1: {
+                        case 1 -> {
                             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Информация о всех студентах:-*-*-*-*-*-*-*-*-*-*-*-");
-                            Student.getAllStudents(students);
-                            System.out.println("-*-*-*-*-*-*-*-*-*-*-*-КОЛИЧЕСТВО ВСЕХ СТУДЕНТОВ: " + students.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                            Student.getAllStudents();
+                            System.out.println("-*-*-*-*-*-*-*-*-*-*-*-КОЛИЧЕСТВО ВСЕХ СТУДЕНТОВ: " + Main.students.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
                             temp2 = true;
                             temp = true;
-                            break;
                         }
-
-                        case 2: {
+                        case 2 -> {
                             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Информация о всех сотрудниках:-*-*-*-*-*-*-*-*-*-*-*-");
-                            Human.getAllEmployees((ArrayList<Human>) employees);
-                            System.out.println("-*-*-*-*-*-*-*-*-*-*-*-КОЛИЧЕСТВО ВСЕХ СОТРУДНИКОВ: " + employees.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                            Human.getAllEmployees();
+                            System.out.println("-*-*-*-*-*-*-*-*-*-*-*-КОЛИЧЕСТВО ВСЕХ СОТРУДНИКОВ: " + Main.employees.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
                             temp = true;
                             temp2 = true;
-                            break;
-
-
                         }
-                        case 3: {
-                            schoolInformation(students, employees);
+                        case 3 -> {
+                            schoolInformation();
                             temp2 = true;
                             temp = true;
                         }
                     }
-                    if (temp2 == false) {
+                    if (!temp2) {
                         System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Ошибка!!!-*-*-*-*-*-*-*-*-*-*-*-" + "\n-*-*-*-*-*-*-*-*-*-*-*-Следуйте выше заданным инструкциям!!-*-*-*-*-*-*-*-*-*-*-*-");
                         break;
 
@@ -216,7 +206,7 @@ public class School {
         }
     }
 
-    static void Main3(List<Student> students, List<Human> employees) {
+    private static void Main3() {
         boolean f = false;
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -225,11 +215,11 @@ public class School {
             int e = scanner.nextInt();
             switch (e) {
                 case 1:
-                    Human.addNewEmployees(students,employees);
+                    Human.addNewEmployees();
                     f = true;
 
                 case 2:
-                    Student.addNewStudent(students);
+                    Student.addNewStudent();
                     f = true;
 
 
@@ -245,7 +235,7 @@ public class School {
     }
 
 
-    static void Main4(List<Student> students, List<Human> employees) {
+    private static void Main4() {
         boolean f = false;
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -254,15 +244,15 @@ public class School {
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 3 чтобы перевести деньги сотрудникам:-*-*-*-*-*-*-*-*-*-*-*-");
             int g = scanner.nextInt();
             if (g == 1) {
-                Human.payedSalary(employees);
+                Human.payedSalary();
                 f = true;
             }
             if (g == 2) {
-                Student.payContractStudent(students);
+                Student.payContractStudent();
                 f = true;
             }
             if (g == 3) {
-                Human.PerevodSredstv(employees);
+                Human.PerevodSredstv();
                 f = true;
             }
 
@@ -276,42 +266,43 @@ public class School {
 
     }
 
-    static void schoolInformation(List<Student> students, List<Human> employees) {
+    private static void schoolInformation() {
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-№ 22 Гимназическая школа имени Джозефа-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Количество сотрудников состовляет: " + employees.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Количество студентов состовляет: " + students.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Общий бюджет школы состовляет: " + Main.MoneySchool + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
-        int obshayaZarplata = 0;
-        int obshiyContract = 0;
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Количество сотрудников состовляет: " + Main.employees.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Количество студентов состовляет: " + Main.students.size() + "-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Общий бюджет школы состовляет: " + Main.theSchoolsBadge + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
+        int totalSalary = 0;
+        int totalContract = 0;
 
-        for (int i = 0; i < employees.size(); i++) {
-            obshayaZarplata = obshayaZarplata + employees.get(i).getSalary();
-
-        }
-        for (int i = 0; i < students.size(); i++) {
-            obshiyContract = obshiyContract + students.get(i).getContract();
+        for (int i = 0; i < Main.employees.size(); i++) {
+            totalSalary = totalSalary + Main.employees.get(i).getSalary();
 
         }
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Общая зарплата которую на выдать сотрудникам за месяц состовляет: " + obshayaZarplata + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Общий контркат которую студенты должны оплатить за месяц: " + obshiyContract + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
+        for (int i = 0; i < Main.students.size(); i++) {
+            totalContract = totalContract + Main.students.get(i).getContract();
+
+        }
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Общая зарплата которую на выдать сотрудникам за месяц состовляет: " + totalSalary + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Общий контркат которую студенты должны оплатить за месяц: " + totalContract + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
 
 
     }
 
 
-    static void restart(List<Student> students, List<Human> employees) {
+    static void restart() {
         boolean d = false;
         System.out.println("\n-*-*-*-*-*-*-*-*-*-*-*-Нажмите любое число чтобы перейти в гланое меню:-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 0 чтобы завершит процесс:-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 0 чтобы завершит процесс и сохранит изминение:-*-*-*-*-*-*-*-*-*-*-*-");
         while (true) {
             try {
                 Scanner scanner = new Scanner(System.in);
                 int b = scanner.nextInt();
                 if (b == 0) {
-                    System.exit(0);
+                    savingData();
+
                 }
                 d = true;
-                MainMenuBugalter(students, employees);
+                MainMenuAccountant();
                 break;
 //
 
@@ -322,6 +313,31 @@ public class School {
                 break;
             }
         }
+    }
+
+    private static void savingData() {
+        try {
+            ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream("employees"));
+            ois.writeObject(Main.employees);
+            ObjectOutputStream oys = new ObjectOutputStream(new FileOutputStream("students"));
+            oys.writeObject(Main.students);
+            ObjectOutputStream ofs = new ObjectOutputStream(new FileOutputStream("ids"));
+            ofs.writeObject(Human.ids);
+            ObjectOutputStream of = new ObjectOutputStream(new FileOutputStream("theSchoolsBadge"));
+            of.writeObject(Main.theSchoolsBadge);
+            of.close();
+            ois.close();
+            oys.close();
+            ofs.close();
+            System.exit(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Запись не удалась");
+
+        }
+
+
     }
 
 

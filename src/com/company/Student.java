@@ -1,9 +1,10 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Student {
+public class Student implements Serializable {
     private String name;
     private String surname;
     private String patronymic;
@@ -15,32 +16,31 @@ public class Student {
     private int payed = 0;
     private int chet;
 
-    public Student(String surname, String name, String patronymic, String login, String password, int id, int course, int contract, int chet) {
+    public Student(String surname, String name, String patronymic, String login, String password, int course, int contract, int chet) {
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
         this.login = login;
         this.password = password;
-        this.id = id;
+        this.id = Human.genUniqueId();
         this.course = course;
         this.contract = contract;
         this.chet = chet;
 
     }
 
-    private static List<Student> students = new ArrayList<>();
 
-    public static void payContractStudent(List<Student> students) {
+    public static void payContractStudent() {
         boolean temp = false;
         while (true) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите id кому хотите оплатить контракт:-*-*-*-*-*-*-*-*-*-*-*-");
             int id = scanner.nextInt();
-            for (int i = 0; i < students.size(); i++) {
-                if (id == students.get(i).getId()) {
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Это ученик :" + students.get(i).getSurname() + " " + students.get(i).getName() + " " + students.get(i).getPatronymic() + "-*-*-*-*-*-*-*-*-*-*-*-");
+            for (Student student : Main.students) {
+                if (id == student.getId()) {
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Это ученик :" + student.getSurname() + " " + student.getName() + " " + student.getPatronymic() + "-*-*-*-*-*-*-*-*-*-*-*-");
 
-                    payContract(students.get(i));
+                    payContract(student);
                     temp = true;
                 }
             }
@@ -56,7 +56,7 @@ public class Student {
 
 
     public static void payContract(Student student) {
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Бюджет школы состовляет: " + Main.MoneySchool + "-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Бюджет школы состовляет: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт состовляет " + student.getContract() + " сомов-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Денег на карте: " + (student.getChet() + " cомов-*-*-*-*-*-*-*-*-*-*-*-"));
         boolean daNet = false;
@@ -74,9 +74,9 @@ public class Student {
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Было денег на счету: " + student.getChet() + "-*-*-*-*-*-*-*-*-*-*-*-");
                     int b = (student.getChet() - student.getContract());
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег на счету: " + b + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Бюджет школы состовляло: " + Main.MoneySchool + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    Main.MoneySchool = Main.MoneySchool + student.getContract();
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Стало: " + Main.MoneySchool + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Бюджет школы состовляло: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    Main.theSchoolsBadge = Main.theSchoolsBadge + student.getContract();
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Стало: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
                     b = student.getChet();
                     daNet = true;
 
@@ -96,18 +96,18 @@ public class Student {
         }
     }
 
-    static void searchStudentName(List<Student> students) {
+    static void searchStudentName() {
         boolean temp = false;
         while (true) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите имя ученика чтобы его найти:-*-*-*-*-*-*-*-*-*-*-*-");
             String name = scanner.nextLine();
-            for (int i = 0; i < students.size(); i++) {
-                if (name.toLowerCase(Locale.ROOT).equals(students.get(i).getName().toLowerCase(Locale.ROOT))) {
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + students.get(i).getSurname() + "" + students.get(i).name + "" + students.get(i).patronymic + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + Human.generateUniqueId() + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + students.get(i).getCourse() + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт студента: " + students.get(i).getContract() + "-*-*-*-*-*-*-*-*-*-*-*-");
+            for (Student student : Main.students) {
+                if (student.getName().toLowerCase().matches("(.*)" + name + "(.*)")) {
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + student.getSurname() + " " + student.getName() + " " + student.getPatronymic() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + student.getId() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + student.getCourse() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт студента: " + student.getContract() + "-*-*-*-*-*-*-*-*-*-*-*-");
                     System.out.println("**************************************************************************************************************************************");
                     temp = true;
                 }
@@ -124,17 +124,18 @@ public class Student {
 
     }
 
-    static void searchStudentId(Scanner scanner, List<Student> students) {
+    static void searchStudentId() {
         boolean temp = false;
         while (true) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите id ученика чтобы его найти:-*-*-*-*-*-*-*-*-*-*-*-");
             int id = scanner.nextInt();
-            for (int i = 0; i < students.size(); i++) {
-                if (id == students.get(i).getId()) {
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + students.get(i).getSurname() + "" + students.get(i).name + "" + students.get(i).patronymic + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + Human.generateUniqueId() + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + students.get(i).getCourse() + "-*-*-*-*-*-*-*-*-*-*-*-");
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт студента: " + students.get(i).getContract() + "-*-*-*-*-*-*-*-*-*-*-*-");
+            for (Student student : Main.students) {
+                if (id == student.getId()) {
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + student.getSurname() + "" + student.name + "" + student.patronymic + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + student.getId() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + student.getCourse() + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт студента: " + student.getContract() + "-*-*-*-*-*-*-*-*-*-*-*-");
                     System.out.println("**************************************************************************************************************************************");
                     temp = true;
                 }
@@ -150,15 +151,15 @@ public class Student {
     }
 
 
-    static void getAllStudents(List<Student> students) {
-        for (int i = 0; i < students.size(); i++) {
-            getStudentInfo(students.get(i));
+    static void getAllStudents() {
+        for (Student student : Main.students) {
+            getStudentInfo(student);
         }
     }
 
     static void getStudentInfo(Student student) {
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + student.getSurname() + " " + student.name + " " + student.patronymic + "-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + Human.generateUniqueId() + "-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + student.getId() + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + student.getCourse() + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт студента: " + student.getContract() + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("**************************************************************************************************************************************");
@@ -167,7 +168,7 @@ public class Student {
     }
 
 
-    static void addNewStudent(List<Student> students) {
+    static void addNewStudent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите вашу фамилию:-*-*-*-*-*-*-*-*-*-*-*-");
         String surname = scanner.next();
@@ -184,7 +185,6 @@ public class Student {
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Придумайте пароль-*-*-*-*-*-*-*-*-*-*-*-");
         String password = null;
         password = Human.passwordSetting(password);
-        int id = Human.generateUniqueId();
         int contract = 0;
         int course = 0;
         int schet = 0;
@@ -197,7 +197,7 @@ public class Student {
                 int foure = 4;
                 int fifty = 5;
                 int six = 6;
-                course = courseS(course);
+                course = courseLimit(course);
                 contract = contractLimit(contract);
                 schet = dobovlenieCheta(first, two, three, foure, fifty, six);
                 c = true;
@@ -211,10 +211,10 @@ public class Student {
         }
 
 
-        Student student = new Student(Human.lowerFirsSurename(surname), Human.lowerFirsName(name), Human.lowerFirsPatronumic(patronumic), Human.loginGmail(login), password, id, course, contract, schet);
-        students.add(student);
+        Student student = new Student(Human.lowerFirsSurename(surname), Human.lowerFirsName(name), Human.lowerFirsPatronumic(patronumic), Human.loginGmail(login), password, course, contract, schet);
+        Main.students.add(student);
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + Human.lowerFirsSurename(surname) + " " + Human.lowerFirsName(name) + " " + Human.lowerFirsPatronumic(patronumic) + "-*-*-*-*-*-*-*-*-*-*-*-");
-        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + id + "-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + student.getId() + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + course + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Денег на карте:" + schet + "-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Логин студента: " + Human.loginGmail(login) + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -267,7 +267,7 @@ public class Student {
     }
 
 
-    static int courseS(int course) {
+    static int courseLimit(int course) {
         boolean b = false;
         while (true) {
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите курс студента:-*-*-*-*-*-*-*-*-*-*-*-");
@@ -319,7 +319,6 @@ public class Student {
     }
 
 
-
     public String getSurname() {
         return surname;
     }
@@ -328,8 +327,6 @@ public class Student {
     public String getPatronymic() {
         return patronymic;
     }
-
-
 
 
     public int getCourse() {
@@ -345,71 +342,15 @@ public class Student {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCourse(int course) {
-        this.course = course;
-    }
-
-    public void setContract(int contract) {
-        this.contract = contract;
-    }
-
-    public int getPayed() {
-        return payed;
-    }
-
-    public void setPayed(int payed) {
-        this.payed = payed;
-    }
 
     public int getChet() {
         return chet;
     }
 
-    public void setChet(int chet) {
-        this.chet = chet;
-    }
 
-    public static List<Student> getStudents() {
-        return students;
-    }
-
-    public static void setStudents(List<Student> students) {
-        Student.students = students;
-    }
 }
