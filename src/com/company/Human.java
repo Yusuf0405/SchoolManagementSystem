@@ -77,8 +77,8 @@ public class Human implements Serializable {
             if (temp) {
                 break;
             }
-            if (temp == false) {
-                System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Такого учителя нет!!!-*-*-*-*-*-*-*-*-*-*-*-" +
+            if (!temp) {
+                System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Такого сотрудника нет!!!-*-*-*-*-*-*-*-*-*-*-*-" +
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Повторите попытку!!!-*-*-*-*-*-*-*-*-*-*-*-");
 
             }
@@ -92,7 +92,7 @@ public class Human implements Serializable {
             Scanner scanner = new Scanner(System.in);
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите имя сотрудника чтобы его найти:-*-*-*-*-*-*-*-*-*-*-*-");
             String name = scanner.nextLine();
-            for (Human human :Main.employees) {
+            for (Human human : Main.employees) {
                 if (human.getName().toLowerCase().matches("(.*)" + name + "(.*)")) {
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. сотрудника: " + human.getSurname() + " " + human.getName() + " " + human.getPatronymic() + "-*-*-*-*-*-*-*-*-*-*-*-");
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID сотрудника: " + human.getId() + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -115,8 +115,8 @@ public class Human implements Serializable {
 
     }
 
-    static void salary(Human human) {
-        if (human.getWorkExperience() == 1) {
+    private static void salary(Human human) {
+        if (human.getWorkExperience() == 1 || human.getWorkExperience() == 0) {
             double n = human.getSalary();
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата данного сотрудника не увеличывается за счет стажа-*-*-*-*-*-*-*-*-*-*-*-");
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Стаж сотрудника состовляет " + human.getWorkExperience() + " год-*-*-*-*-*-*-*-*-*-*-*-");
@@ -132,7 +132,7 @@ public class Human implements Serializable {
                         System.err.println("\"-*-*-*-*-*-*-*-*-*-*-*-Не достаточно денег чтобы оплатить зарплату!!\"-*-*-*-*-*-*-*-*-*-*-*-");
                         daNet = true;
                     } else {
-                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере- " + n+"-*-*-*-*-*-*-*-*-*-*-*-");
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере- " + n + "-*-*-*-*-*-*-*-*-*-*-*-");
                         Main.theSchoolsBadge = Main.theSchoolsBadge - n;
                         int schet = (int) (human.getChet() + n);
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег в бюджете: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -191,6 +191,40 @@ public class Human implements Serializable {
         if (human.getWorkExperience() >= 6 && human.getWorkExperience() <= 10) {
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата данного сотрудника увеличывается на 20% за счет стажа " + human.getWorkExperience() + " лет-*-*-*-*-*-*-*-*-*-*-*-");
             double n = (human.getSalary() + (human.getSalary() * 0.2));
+            System.out.println("--*-*-*-*-*-*-*-*-*-*-*-Ему будет задана зарплта в размере " + n + "-*-*-*-*-*-*-*-*-*-*-*-");
+            boolean daNet = false;
+            while (true) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите 'ДА' если хотите задать зарплату или 'НЕТ' чтобы отменть процесс-*-*-*-*-*-*-*-*-*-*-*-");
+                String vvod = scanner.nextLine();
+                if (vvod.toLowerCase(Locale.ROOT).equals("да")) {
+                    if (Main.theSchoolsBadge < n) {
+                        System.err.println("\"-*-*-*-*-*-*-*-*-*-*-*-Не достаточно денег чтобы оплатить зарплату!!\"-*-*-*-*-*-*-*-*-*-*-*-");
+                        daNet = true;
+                    } else {
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере-*-*-*-*-*-*-*-*-*-*-*-" + n);
+                        Main.theSchoolsBadge = Main.theSchoolsBadge - n;
+                        int schet = (int) (human.getChet() + n);
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег в бюджете: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Счет сотрудника увеличелось: " + schet + "-*-*-*-*-*-*-*-*-*-*-*-");
+                        daNet = true;
+
+                    }
+                }
+                if (vvod.toLowerCase(Locale.ROOT).equals("нет")) {
+                    daNet = true;
+                }
+                if (daNet == false) {
+                    System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Введите 'ДА' или 'НЕТ'-*-*-*-*-*-*-*-*-*-*-*-");
+                }
+                if (daNet) {
+                    break;
+                }
+            }
+        }
+        if (human.getWorkExperience() >= 11 && human.getWorkExperience() <= 40) {
+            System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата данного сотрудника увеличывается на 30% за счет стажа " + human.getWorkExperience() + " лет-*-*-*-*-*-*-*-*-*-*-*-");
+            double n = (human.getSalary() + (human.getSalary() * 0.3));
             System.out.println("--*-*-*-*-*-*-*-*-*-*-*-Ему будет задана зарплта в размере " + n + "-*-*-*-*-*-*-*-*-*-*-*-");
             boolean daNet = false;
             while (true) {
@@ -326,12 +360,12 @@ public class Human implements Serializable {
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Введите стаж сотрудника:-*-*-*-*-*-*-*-*-*-*-*-");
             Scanner scanner = new Scanner(System.in);
             int n = scanner.nextInt();
-            if (n > 0 && n < 11) {
+            if (n >= 0 && n < 41) {
                 workExperience = n;
                 b = true;
             }
             if (!b) {
-                System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Вы перевысели лимит зарплаты!!-*-*-*-*-*-*-*-*-*-*-*-");
+                System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Стаж сотудника не должен быть 40-*-*-*-*-*-*-*-*-*-*-*-");
             }
             if (b) {
                 break;
@@ -355,7 +389,7 @@ public class Human implements Serializable {
                 b = true;
             }
             if (!b) {
-                System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Вы перевысели лимит зарплаты!!-*-*-*-*-*-*-*-*-*-*-*-");
+                System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Минимальная зарплата 3000 а максимальная 20000 сомов-*-*-*-*-*-*-*-*-*-*-*-");
             }
             if (b) {
                 break;
@@ -491,12 +525,13 @@ public class Human implements Serializable {
             if (temp) {
                 break;
             }
-            if (temp == false) {
+            if (!temp) {
                 System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Такого сотрудника нет!!!-*-*-*-*-*-*-*-*-*-*-*-" +
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Повторите попытку!!!-*-*-*-*-*-*-*-*-*-*-*-");
             }
         }
     }
+
     public static int genUniqueId() {
         int id = 0;
         while (true) {

@@ -114,13 +114,15 @@ public class Student implements Serializable {
             }
 
             if (temp) {
+                School.restart();
                 break;
             }
-            if (temp == false) {
+            if (!temp) {
                 System.err.println("-*-*-*-*-*-*-*-*-*-*-*-Такого студента нет!!!-*-*-*-*-*-*-*-*-*-*-*-" +
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Повторите попытку!!!-*-*-*-*-*-*-*-*-*-*-*-");
             }
         }
+
 
     }
 
@@ -132,7 +134,7 @@ public class Student implements Serializable {
             int id = scanner.nextInt();
             for (Student student : Main.students) {
                 if (id == student.getId()) {
-                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + student.getSurname() + "" + student.name + "" + student.patronymic + "-*-*-*-*-*-*-*-*-*-*-*-");
+                    System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Ф.И.О. студента: " + student.getSurname() + " " + student.name + "" + student.patronymic + "-*-*-*-*-*-*-*-*-*-*-*-");
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-ID студента: " + student.getId() + "-*-*-*-*-*-*-*-*-*-*-*-");
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Курс студента: " + student.getCourse() + "-*-*-*-*-*-*-*-*-*-*-*-");
                     System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Контракт студента: " + student.getContract() + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -141,9 +143,10 @@ public class Student implements Serializable {
                 }
             }
             if (temp) {
+                School.restart();
                 break;
             }
-            if (temp == false) {
+            if (!temp) {
                 System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Такого студента нет!!!-*-*-*-*-*-*-*-*-*-*-*-" +
                         "\n-*-*-*-*-*-*-*-*-*-*-*-Повторите попытку!!!-*-*-*-*-*-*-*-*-*-*-*-");
             }
