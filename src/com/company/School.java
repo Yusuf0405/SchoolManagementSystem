@@ -1,6 +1,8 @@
 package com.company;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.*;
 
@@ -343,6 +345,28 @@ public class School {
 
         }
 
+
+    }
+
+    static void readingFile() {
+        try {
+            ObjectInputStream oos = new ObjectInputStream(new FileInputStream("employees"));
+            ObjectInputStream os = new ObjectInputStream(new FileInputStream("students"));
+            ObjectInputStream osf = new ObjectInputStream(new FileInputStream("ids"));
+            ObjectInputStream oj = new ObjectInputStream(new FileInputStream("theSchoolsBadge"));
+            Main.theSchoolsBadge = (Double) oj.readObject();
+            Main.employees = (ArrayList<Human>) oos.readObject();
+            Main.students = (ArrayList<Student>) os.readObject();
+            Human.ids = (ArrayList<Integer>) osf.readObject();
+            oj.close();
+            osf.close();
+            oos.close();
+            os.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Не удалось прочитать файл!!!");
+        }
 
     }
 

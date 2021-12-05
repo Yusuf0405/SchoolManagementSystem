@@ -104,27 +104,7 @@ public class Main {
         accountant = new Accountant("Комарова", "Елизавета", "Артёмовна", 4, 90030, "1", "1", bankChet.get(1), "Бухгалтер");
         accountants.add(accountant);
         School school = new School();
-
-
-        try {
-            ObjectInputStream oos = new ObjectInputStream(new FileInputStream("employees"));
-            ObjectInputStream os = new ObjectInputStream(new FileInputStream("students"));
-            ObjectInputStream osf = new ObjectInputStream(new FileInputStream("ids"));
-            ObjectInputStream oj = new ObjectInputStream(new FileInputStream("theSchoolsBadge"));
-            theSchoolsBadge = (Double) oj.readObject();
-            employees = (ArrayList<Human>) oos.readObject();
-            students = (ArrayList<Student>) os.readObject();
-            Human.ids = (ArrayList<Integer>) osf.readObject();
-            oj.close();
-            osf.close();
-            oos.close();
-            os.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Не удалось прочитать файл!!!");
-        }
-
+        School.readingFile();
         school.welcome();
         // Логин 1
         // пароль 1
