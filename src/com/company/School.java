@@ -127,7 +127,6 @@ public class School {
                             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 1 чтобы искать всех сотрудников по ID:-*-*-*-*-*-*-*-*-*-*-*-");
                             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Нажмите 2 чтобы искать всех сотрудников по имени:-*-*-*-*-*-*-*-*-*-*-*-");
                             int b = scanner.nextInt();
-
                             switch (b) {
                                 case 1:
                                     Human.searchEmployeeId();
@@ -259,7 +258,7 @@ public class School {
                 f = true;
             }
             if (g == 3) {
-                Human.PerevodSredstv();
+                Human.transferOfFunds();
                 f = true;
             }
 

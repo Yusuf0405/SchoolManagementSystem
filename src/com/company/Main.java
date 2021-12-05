@@ -3,6 +3,7 @@ package com.company;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class Main {
         employees.addAll(cooks);
         employees.addAll(janitors);
         employees.addAll(accountants);
-        Student aman = new Student("Архипов", "Данила", "Андреевич", "fvgegeg@gmail.com", "344554", 3, 300000, bankChet.get(1));
+        Student aman = new Student("Архипов", "Данила", "Андреевич", "fvgegeg@gmail.com", "344554", 3, 3000, bankChet.get(1));
         Student josef = new Student("Викулова", "Вероника", "Сергеевна", "gegergr@gmail.com", "53536", 2, 10000, bankChet.get(5));
         Student borya = new Student("Девятова", "Оксана", "Сергеевна", "gegrgeg@gmail.com", "5545466", 3, 20000, bankChet.get(4));
         Student yan = new Student("Демьянова", "Ирина", "Владимировна", "agvreafgag@gmail.com", "987654", 4, 5000, bankChet.get(2));
@@ -104,6 +105,7 @@ public class Main {
         accountant = new Accountant("Комарова", "Елизавета", "Артёмовна", 4, 90030, "1", "1", bankChet.get(1), "Бухгалтер");
         accountants.add(accountant);
         School school = new School();
+//
         School.readingFile();
         school.welcome();
         // Логин 1

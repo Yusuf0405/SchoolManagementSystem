@@ -1,10 +1,12 @@
 package com.company;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Human implements Serializable {
     private String name;
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd - MM - yyyy");
     private String surname;
     private String patronymic;
     private String login;
@@ -116,6 +118,7 @@ public class Human implements Serializable {
     }
 
     private static void salary(Human human) {
+
         if (human.getWorkExperience() == 1 || human.getWorkExperience() == 0) {
             double n = human.getSalary();
             System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата данного сотрудника не увеличывается за счет стажа-*-*-*-*-*-*-*-*-*-*-*-");
@@ -133,6 +136,7 @@ public class Human implements Serializable {
                         daNet = true;
                     } else {
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере- " + n + "-*-*-*-*-*-*-*-*-*-*-*-");
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Когда была дана зарплата: " + sdf.format(new Date()) + "-*-*-*-*-*-*-*-*-*-*-*-");
                         Main.theSchoolsBadge = Main.theSchoolsBadge - n;
                         int schet = (int) (human.getChet() + n);
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег в бюджете: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -169,6 +173,8 @@ public class Human implements Serializable {
                         daNet = true;
                     } else {
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере-*-*-*-*-*-*-*-*-*-*-*-" + n);
+                        Date date1 = new Date();
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Когда была дана зарплата: " + sdf.format(new Date()) + "-*-*-*-*-*-*-*-*-*-*-*-");
                         Main.theSchoolsBadge = Main.theSchoolsBadge - n;
                         int schet = (int) (human.getChet() + n);
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег в бюджете: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -203,6 +209,7 @@ public class Human implements Serializable {
                         daNet = true;
                     } else {
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере-*-*-*-*-*-*-*-*-*-*-*-" + n);
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Когда была дана зарплата: " + sdf.format(new Date())+ "-*-*-*-*-*-*-*-*-*-*-*-");
                         Main.theSchoolsBadge = Main.theSchoolsBadge - n;
                         int schet = (int) (human.getChet() + n);
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег в бюджете: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -233,10 +240,11 @@ public class Human implements Serializable {
                 String vvod = scanner.nextLine();
                 if (vvod.toLowerCase(Locale.ROOT).equals("да")) {
                     if (Main.theSchoolsBadge < n) {
-                        System.err.println("\"-*-*-*-*-*-*-*-*-*-*-*-Не достаточно денег чтобы оплатить зарплату!!\"-*-*-*-*-*-*-*-*-*-*-*-");
+                        System.err.println("\"-*-*-*-*-*-*-*-*-*-*-*-Не достаточно денег чтобы оплатить зарплату!!-*-*-*-*-*-*-*-*-*-*-*-");
                         daNet = true;
                     } else {
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Зарплата была выдына в размере-*-*-*-*-*-*-*-*-*-*-*-" + n);
+                        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Когда была дана зарплата: " +  sdf.format(new Date()) + "-*-*-*-*-*-*-*-*-*-*-*-");
                         Main.theSchoolsBadge = Main.theSchoolsBadge - n;
                         int schet = (int) (human.getChet() + n);
                         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-Осталось денег в бюджете: " + Main.theSchoolsBadge + "-*-*-*-*-*-*-*-*-*-*-*-");
@@ -445,7 +453,7 @@ public class Human implements Serializable {
 
     }
 
-    static void PerevodSredstv() {
+    static void transferOfFunds() {
         boolean temp = false;
         while (true) {
             Scanner scanner = new Scanner(System.in);
